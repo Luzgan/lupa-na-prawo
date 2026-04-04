@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}Szukaj - Lupa na prawo{% endblock %}
+
+{% block content %}
+<section class="bg-primary py-8">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <form action="/szukaj" method="GET" class="flex rounded-xl overflow-hidden shadow-lg" onsubmit="this.querySelector('.search-btn').disabled=true;this.querySelector('.search-btn').innerHTML='<span class=\'inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin\'></span> Szukam...'">
+      <div class="relative flex-1">
+        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+        <input type="text" name="q" value="{{ query or '' }}"
+               placeholder="Wpisz pytanie prawne..."
+               class="w-full pl-12 pr-4 py-4 text-base focus:outline-none border-0">
+        {% if act_type %}
+        <input type="hidden" name="act_type" value="{{ act_type }}">
+        {% endif %}
+      </div>
+      <button type="submit"
+              class="search-btn px-6 md:px-8 text-white font-semibold text-sm whitespace-nowrap disabled:opacity-70"
+              style="background: linear-gradient(135deg, #ba002e 0%, #e31c40 100%);">
+        Szukaj
+      </button>
+    </form>
+  </div>
+</section>
+
+{% if search_error %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+  <div class="bg-red-50 border border-red-200 rounded-lg p-4 flex items-start gap-3">
+    <span class="material-symbols-outlined text-red-500 mt-0.5">error</span>
+    <p class="text-red-700 text-sm">{{ search_error }}</p>
+  </div>
+</div>
+{% endif %}
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="flex flex-col md:flex-row gap-8">
+    <!-- Mobile filter toggle -->
+    <div class="md:hidden">
+      <button onclick="document.getElementById('filters').classList.toggle('hidden')"
+              class="flex items-center gap-2 px-4 py-2 bg-white rounded-lg shadow-sm text-sm font-medium text-gray-700 active:bg-gray-50">
+        <span class="material-symbols-outlined text-sm">filter_list</span>
+        Filtry
+      </button>
+    </div>
+    <!-- Sidebar -->
+    <aside id="filters" class="hidden md:block w-full md:w-64 flex-shrink-0">
+      <div class="bg-white rounded-lg shadow-sm p-5">
+        <h3 class="font-headline font-bold text-sm text-primary mb-4 uppercase tracking-wide">Filtry</h3>
+        <div class="space-y-2">
+          <label class="block text-sm font-medium text-gray-700 mb-1">Typ aktu prawnego</label>
+          <select id="act-type-filter"
+                  class="w-full rounded-md border border-gray-300 text-sm py-2 px-3 focus:ring-secondary focus:border-secondary"
+                  onchange="applyFilter()">
+            <option value="">Wszystkie typy</option>
+            {% for t in act_types %}
+            <option value="{{ t }}" {% if act_type == t %}selected{% endif %}>{{ t }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Results -->
+    <div class="flex-1">
+      {% if query %}
+      <div id="search-results">
+        {% include "partials/search_results.html" %}
+      </div>
+      {% else %}
+      <div class="text-center py-16">
+        <span class="material-symbols-outlined text-6xl text-gray-300 mb-4">search</span>
+        <h3 class="font-headline font-bold text-xl text-gray-500 mb-2">Wpisz zapytanie</h3>
+        <p class="text-gray-400">Wyszukaj w polskim prawie używając języka naturalnego</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script>
+function applyFilter() {
+  const q = document.querySelector('input[name="q"]').value;
+  const actType = document.getElementById('act-type-filter').value;
+  let url = '/szukaj?q=' + encodeURIComponent(q);
+  if (actType) url += '&act_type=' + encodeURIComponent(actType);
+  window.location.href = url;
+}
+</script>
+{% endblock %}

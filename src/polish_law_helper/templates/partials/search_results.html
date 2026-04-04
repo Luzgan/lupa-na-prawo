@@ -1,0 +1,76 @@
+{% if results %}
+<div class="mb-4">
+  <p class="text-sm text-gray-500">
+    Znaleziono <strong>{{ total }}</strong> wyników dla zapytania <strong>"{{ query }}"</strong>
+    {% if act_type %} (typ: {{ act_type }}){% endif %}
+  </p>
+</div>
+
+<div class="space-y-4">
+  {% for r in results %}
+  <div class="bg-white rounded-lg shadow-sm p-5 hover:shadow-md transition-shadow">
+    <div class="flex flex-wrap items-center gap-2 mb-2">
+      {% if r.score is not none %}
+      <span class="inline-block px-2 py-0.5 rounded-full text-xs font-medium bg-secondary/10 text-secondary">
+        {{ "%.0f"|format(r.score * 100) }}% trafność
+      </span>
+      {% endif %}
+      {% if r.act_type %}
+      <span class="inline-block px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">{{ r.act_type }}</span>
+      {% endif %}
+    </div>
+    <h3 class="text-base font-semibold mb-1 leading-snug"><a href="/ustawa/{{ r.eli_id }}" class="text-primary hover:text-secondary hover:underline transition-colors">{{ r.act_title }}</a></h3>
+    <p class="text-xs text-gray-500 mb-3">
+      <span class="material-symbols-outlined text-xs align-middle mr-0.5">article</span>
+      Art. {{ r.article_num }}{% if r.paragraph_num %} &sect; {{ r.paragraph_num }}{% endif %}
+      {% if r.chapter %} &middot; {{ r.chapter }}{% endif %}
+    </p>
+    <p class="text-sm text-gray-700 leading-relaxed line-clamp-4">{{ r.text }}</p>
+  </div>
+  {% endfor %}
+</div>
+
+<!-- Pagination -->
+{% if total_pages > 1 %}
+<div class="flex justify-center items-center gap-2 mt-8">
+  {% if page > 1 %}
+  <button class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50"
+          hx-get="/partials/search-results?q={{ query | urlencode }}&page={{ page - 1 }}{% if act_type %}&act_type={{ act_type | urlencode }}{% endif %}"
+          hx-target="#search-results"
+          hx-swap="innerHTML">
+    <span class="material-symbols-outlined text-sm">chevron_left</span>
+  </button>
+  {% endif %}
+
+  {% for p in range(1, total_pages + 1) %}
+    {% if p == page %}
+    <span class="px-3 py-2 rounded-md text-sm font-bold text-white" style="background: linear-gradient(135deg, #ba002e 0%, #e31c40 100%);">{{ p }}</span>
+    {% elif p == 1 or p == total_pages or (p >= page - 2 and p <= page + 2) %}
+    <button class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50"
+            hx-get="/partials/search-results?q={{ query | urlencode }}&page={{ p }}{% if act_type %}&act_type={{ act_type | urlencode }}{% endif %}"
+            hx-target="#search-results"
+            hx-swap="innerHTML">{{ p }}</button>
+    {% elif p == page - 3 or p == page + 3 %}
+    <span class="text-gray-400 text-sm">...</span>
+    {% endif %}
+  {% endfor %}
+
+  {% if page < total_pages %}
+  <button class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50"
+          hx-get="/partials/search-results?q={{ query | urlencode }}&page={{ page + 1 }}{% if act_type %}&act_type={{ act_type | urlencode }}{% endif %}"
+          hx-target="#search-results"
+          hx-swap="innerHTML">
+    <span class="material-symbols-outlined text-sm">chevron_right</span>
+  </button>
+  {% endif %}
+</div>
+{% endif %}
+
+{% elif query %}
+<div class="text-center py-16">
+  <span class="material-symbols-outlined text-6xl text-gray-300 mb-4">search_off</span>
+  <h3 class="font-headline font-bold text-xl text-gray-500 mb-2">Brak wyników</h3>
+  <p class="text-gray-400 text-sm">Nie znaleziono wyników dla zapytania "{{ query }}"</p>
+  <p class="text-gray-400 text-sm mt-1">Spróbuj zmienić słowa kluczowe lub usunąć filtry</p>
+</div>
+{% endif %}

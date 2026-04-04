@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Sejm - Lupa na prawo{% endblock %}
+
+{% block content %}
+<section class="bg-primary py-8">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h1 class="font-headline font-bold text-3xl text-white flex items-center gap-3">
+      <span class="material-symbols-outlined text-secondary">account_balance</span>
+      Sejm RP
+    </h1>
+    <p class="text-gray-400 mt-2 text-sm">Procesy legislacyjne i głosowania X kadencji</p>
+  </div>
+</section>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <!-- Tabs -->
+  <div class="flex border-b border-gray-200 mb-8">
+    <button id="tab-processes"
+            class="px-4 md:px-6 py-3 text-sm font-semibold border-b-2 {% if active_tab == 'processes' %}border-secondary text-secondary{% else %}border-transparent text-gray-500 hover:text-gray-700{% endif %}"
+            hx-get="/partials/sejm-processes?page=1"
+            hx-target="#tab-content"
+            hx-swap="innerHTML"
+            onclick="switchTab('processes')">
+      <span class="material-symbols-outlined text-sm align-middle mr-1">description</span>
+      Procesy legislacyjne
+    </button>
+    <button id="tab-votings"
+            class="px-4 md:px-6 py-3 text-sm font-semibold border-b-2 {% if active_tab == 'votings' %}border-secondary text-secondary{% else %}border-transparent text-gray-500 hover:text-gray-700{% endif %}"
+            hx-get="/partials/sejm-votings?page=1"
+            hx-target="#tab-content"
+            hx-swap="innerHTML"
+            onclick="switchTab('votings')">
+      <span class="material-symbols-outlined text-sm align-middle mr-1">how_to_vote</span>
+      Głosowania
+    </button>
+  </div>
+
+  <!-- Tab Content -->
+  <div id="tab-content">
+    {% if active_tab == 'votings' %}
+      {% include "partials/sejm_votings.html" %}
+    {% else %}
+      {% include "partials/sejm_processes.html" %}
+    {% endif %}
+  </div>
+</div>
+
+<script>
+function switchTab(tab) {
+  const tabProcesses = document.getElementById('tab-processes');
+  const tabVotings = document.getElementById('tab-votings');
+  if (tab === 'processes') {
+    tabProcesses.className = 'px-4 md:px-6 py-3 text-sm font-semibold border-b-2 border-secondary text-secondary';
+    tabVotings.className = 'px-4 md:px-6 py-3 text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:text-gray-700';
+  } else {
+    tabVotings.className = 'px-4 md:px-6 py-3 text-sm font-semibold border-b-2 border-secondary text-secondary';
+    tabProcesses.className = 'px-4 md:px-6 py-3 text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:text-gray-700';
+  }
+}
+</script>
+{% endblock %}

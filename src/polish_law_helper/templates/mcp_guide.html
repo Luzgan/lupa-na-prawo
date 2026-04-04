@@ -1,0 +1,701 @@
+{% extends "base.html" %} {% block title %}Połącz ze swoim AI - Lupa na
+Prawny{% endblock %} {% block content %}
+<section class="bg-primary py-10">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <span class="material-symbols-outlined text-5xl text-secondary mb-4"
+      >integration_instructions</span
+    >
+    <h1 class="font-headline font-bold text-3xl md:text-4xl text-white mb-3">
+      Połącz ze swoim agentem AI
+    </h1>
+    <p class="text-gray-300 text-lg">
+      Twój asystent AI uzyska bezpośredni dostęp do bazy polskiego prawa
+    </p>
+  </div>
+</section>
+
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <!-- Step 1: Choose setup type -->
+  <div id="step-choice">
+    <h2 class="font-headline font-bold text-xl text-primary mb-6 text-center">
+      Wybierz sposób konfiguracji
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Guided -->
+      <button
+        onclick="showStep('guided-client')"
+        class="bg-white rounded-xl shadow-sm border-2 border-gray-100 hover:border-secondary/50 p-8 text-left transition-all hover:shadow-md group"
+      >
+        <div class="flex items-center gap-3 mb-4">
+          <div
+            class="w-12 h-12 rounded-xl flex items-center justify-center"
+            style="
+              background: linear-gradient(135deg, #ba002e 0%, #e31c40 100%);
+            "
+          >
+            <span class="material-symbols-outlined text-white"
+              >magic_button</span
+            >
+          </div>
+          <div>
+            <h3 class="font-headline font-bold text-lg text-primary">
+              Konfiguracja krok po kroku
+            </h3>
+            <p class="text-xs text-gray-400">Zalecane</p>
+          </div>
+        </div>
+        <p class="text-sm text-gray-600 mb-4">
+          Przeprowadzimy Cię przez cały proces. Idealne jeśli po raz pierwszy
+          podłączasz źródło danych do swojego asystenta AI.
+        </p>
+        <span
+          class="inline-flex items-center gap-1 text-sm font-medium text-secondary group-hover:underline"
+        >
+          Rozpocznij
+          <span class="material-symbols-outlined text-sm">arrow_forward</span>
+        </span>
+      </button>
+
+      <!-- Advanced -->
+      <button
+        onclick="showStep('advanced')"
+        class="bg-white rounded-xl shadow-sm border-2 border-gray-100 hover:border-secondary/50 p-8 text-left transition-all hover:shadow-md group"
+      >
+        <div class="flex items-center gap-3 mb-4">
+          <div
+            class="w-12 h-12 rounded-xl bg-gray-100 flex items-center justify-center"
+          >
+            <span class="material-symbols-outlined text-gray-700"
+              >terminal</span
+            >
+          </div>
+          <div>
+            <h3 class="font-headline font-bold text-lg text-primary">
+              Konfiguracja zaawansowana
+            </h3>
+            <p class="text-xs text-gray-400">Dla użytkowników MCP</p>
+          </div>
+        </div>
+        <p class="text-sm text-gray-600 mb-4">
+          Znasz MCP i potrzebujesz tylko adresu serwera? Tutaj znajdziesz
+          wszystkie dane techniczne.
+        </p>
+        <span
+          class="inline-flex items-center gap-1 text-sm font-medium text-secondary group-hover:underline"
+        >
+          Pokaż dane
+          <span class="material-symbols-outlined text-sm">arrow_forward</span>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Guided: Choose client -->
+  <div id="step-guided-client" class="hidden">
+    <button
+      onclick="showStep('choice')"
+      class="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-secondary mb-6"
+    >
+      <span class="material-symbols-outlined text-sm">arrow_back</span>
+      Wróć
+    </button>
+    <div class="text-center mb-2">
+      <span
+        class="inline-block px-3 py-1 rounded-full bg-secondary/10 text-secondary text-xs font-semibold"
+        >Krok 1 z 3</span
+      >
+    </div>
+    <h2 class="font-headline font-bold text-xl text-primary mb-2 text-center">
+      Jakiego asystenta AI używasz?
+    </h2>
+    <p class="text-gray-500 text-sm mb-8 text-center">
+      Wybierz swojego klienta, a pokażemy Ci jak go podłączyć
+    </p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-lg mx-auto">
+      <button
+        onclick="showStep('guided-claude')"
+        class="bg-white rounded-xl shadow-sm border-2 border-gray-100 hover:border-secondary/50 p-6 text-center transition-all hover:shadow-md"
+      >
+        <div
+          class="w-16 h-16 rounded-2xl bg-[#D4A574]/10 flex items-center justify-center mx-auto mb-4"
+        >
+          <span class="material-symbols-outlined text-3xl text-[#D4A574]"
+            >smart_toy</span
+          >
+        </div>
+        <h3 class="font-headline font-bold text-primary mb-1">Claude</h3>
+        <p class="text-xs text-gray-400">Claude Desktop / claude.ai</p>
+      </button>
+
+      <button
+        onclick="showStep('guided-chatgpt')"
+        class="bg-white rounded-xl shadow-sm border-2 border-gray-100 hover:border-secondary/50 p-6 text-center transition-all hover:shadow-md"
+      >
+        <div
+          class="w-16 h-16 rounded-2xl bg-[#10A37F]/10 flex items-center justify-center mx-auto mb-4"
+        >
+          <span class="material-symbols-outlined text-3xl text-[#10A37F]"
+            >chat</span
+          >
+        </div>
+        <h3 class="font-headline font-bold text-primary mb-1">ChatGPT</h3>
+        <p class="text-xs text-gray-400">Custom GPT / OpenAI</p>
+      </button>
+    </div>
+  </div>
+
+  <!-- Guided: Claude setup -->
+  <div id="step-guided-claude" class="hidden">
+    <button
+      onclick="showStep('guided-client')"
+      class="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-secondary mb-6"
+    >
+      <span class="material-symbols-outlined text-sm">arrow_back</span>
+      Wróć
+    </button>
+    <div class="text-center mb-2">
+      <span
+        class="inline-block px-3 py-1 rounded-full bg-secondary/10 text-secondary text-xs font-semibold"
+        >Krok 2 z 2</span
+      >
+    </div>
+    <h2 class="font-headline font-bold text-xl text-primary mb-8 text-center">
+      Konfiguracja Claude
+    </h2>
+
+    <div class="space-y-6">
+      <div class="flex gap-4">
+        <div
+          class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold bg-secondary"
+        >
+          1
+        </div>
+        <div class="flex-1">
+          <h3 class="font-semibold text-primary">Uruchom Claude</h3>
+          <p class="text-sm text-gray-500">
+            Otwórz aplikację Claude Desktop lub przejdź na
+            <a href="https://claude.ai" target="_blank" class="text-secondary hover:underline">claude.ai</a>.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex gap-4">
+        <div
+          class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold bg-secondary"
+        >
+          2
+        </div>
+        <div class="flex-1">
+          <h3 class="font-semibold text-primary">Kliknij „Customize"</h3>
+          <p class="text-sm text-gray-500">
+            Przycisk znajduje się w lewym dolnym rogu okna czatu, obok ikony profilu.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex gap-4">
+        <div
+          class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold bg-secondary"
+        >
+          3
+        </div>
+        <div class="flex-1">
+          <h3 class="font-semibold text-primary">Kliknij „Connectors"</h3>
+          <p class="text-sm text-gray-500">
+            Wybierz zakładkę <strong>Connectors</strong> w menu po lewej stronie.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex gap-4">
+        <div
+          class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold bg-secondary"
+        >
+          4
+        </div>
+        <div class="flex-1">
+          <h3 class="font-semibold text-primary">Kliknij „+"</h3>
+          <p class="text-sm text-gray-500">
+            Przycisk dodawania nowego konektora.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex gap-4">
+        <div
+          class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold bg-secondary"
+        >
+          5
+        </div>
+        <div class="flex-1">
+          <h3 class="font-semibold text-primary">Wpisz nazwę i adres URL</h3>
+          <p class="text-sm text-gray-500 mb-3">
+            Wypełnij formularz następującymi danymi:
+          </p>
+          <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm text-green-400 space-y-2">
+            <div class="flex items-center justify-between">
+              <span><span class="text-gray-500">Name:</span> Lupa na prawo</span>
+              <button
+                onclick="
+                  navigator.clipboard.writeText('Lupa na prawo');
+                  this.textContent = 'Skopiowano!';
+                  setTimeout(() => (this.textContent = 'Kopiuj'), 2000);
+                "
+                class="text-gray-500 hover:text-white text-xs px-2 py-1 rounded border border-gray-700 hover:border-gray-500 transition-colors flex-shrink-0"
+              >
+                Kopiuj
+              </button>
+            </div>
+            <div class="flex items-center justify-between">
+              <span><span class="text-gray-500">URL:</span> {{ base_url }}/mcp</span>
+              <button
+                onclick="
+                  navigator.clipboard.writeText('{{ base_url }}/mcp');
+                  this.textContent = 'Skopiowano!';
+                  setTimeout(() => (this.textContent = 'Kopiuj'), 2000);
+                "
+                class="text-gray-500 hover:text-white text-xs px-2 py-1 rounded border border-gray-700 hover:border-gray-500 transition-colors flex-shrink-0"
+              >
+                Kopiuj
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex gap-4">
+        <div
+          class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold bg-secondary"
+        >
+          6
+        </div>
+        <div class="flex-1">
+          <h3 class="font-semibold text-primary">Kliknij „Add"</h3>
+          <p class="text-sm text-gray-500 mb-4">
+            Gotowe! Teraz możesz pytać Claude o polskie prawo:
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="bg-gray-50 rounded-lg p-3 border border-gray-100">
+              <p class="text-sm text-gray-700 italic">
+                „Jakie prawa ma pracownik przy wypowiedzeniu umowy?"
+              </p>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-3 border border-gray-100">
+              <p class="text-sm text-gray-700 italic">
+                „Co mówi Kodeks cywilny o przedawnieniu?"
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Guided: ChatGPT setup -->
+  <div id="step-guided-chatgpt" class="hidden">
+    <button
+      onclick="showStep('guided-client')"
+      class="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-secondary mb-6"
+    >
+      <span class="material-symbols-outlined text-sm">arrow_back</span>
+      Wróć
+    </button>
+    <div class="text-center mb-2">
+      <span
+        class="inline-block px-3 py-1 rounded-full bg-secondary/10 text-secondary text-xs font-semibold"
+        >Krok 2 z 2</span
+      >
+    </div>
+    <h2 class="font-headline font-bold text-xl text-primary mb-8 text-center">
+      Konfiguracja ChatGPT
+    </h2>
+
+    <div class="space-y-6">
+      <div class="flex gap-4">
+        <div
+          class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold bg-secondary"
+        >
+          1
+        </div>
+        <div class="flex-1">
+          <h3 class="font-semibold text-primary">Kliknij „GPTs"</h3>
+          <p class="text-sm text-gray-500">
+            Przejdź na
+            <a href="https://chatgpt.com" target="_blank" class="text-secondary hover:underline">chatgpt.com</a>
+            i kliknij <strong>GPTs</strong> w menu po lewej stronie.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex gap-4">
+        <div
+          class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold bg-secondary"
+        >
+          2
+        </div>
+        <div class="flex-1">
+          <h3 class="font-semibold text-primary">Kliknij „Create"</h3>
+          <p class="text-sm text-gray-500">
+            Przycisk znajduje się w prawym górnym rogu strony.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex gap-4">
+        <div
+          class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold bg-secondary"
+        >
+          3
+        </div>
+        <div class="flex-1">
+          <h3 class="font-semibold text-primary">Kliknij „Configure"</h3>
+          <p class="text-sm text-gray-500">
+            Przejdź do zakładki <strong>Configure</strong> w górnej części edytora GPT.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex gap-4">
+        <div
+          class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold bg-secondary"
+        >
+          4
+        </div>
+        <div class="flex-1">
+          <h3 class="font-semibold text-primary">Nazwij swojego GPT</h3>
+          <p class="text-sm text-gray-500 mb-3">
+            W polu <strong>Name</strong> wpisz nazwę, na przykład:
+          </p>
+          <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm text-green-400 flex items-center justify-between">
+            <span>Lupa na prawo</span>
+            <button
+              onclick="
+                navigator.clipboard.writeText('Lupa na prawo');
+                this.textContent = 'Skopiowano!';
+                setTimeout(() => (this.textContent = 'Kopiuj'), 2000);
+              "
+              class="text-gray-500 hover:text-white text-xs px-2 py-1 rounded border border-gray-700 hover:border-gray-500 transition-colors flex-shrink-0"
+            >
+              Kopiuj
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex gap-4">
+        <div
+          class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold bg-secondary"
+        >
+          5
+        </div>
+        <div class="flex-1">
+          <h3 class="font-semibold text-primary">Przewiń do „Actions" i kliknij „Create new action"</h3>
+          <p class="text-sm text-gray-500">
+            Przewiń stronę w dół do sekcji <strong>Actions</strong>, a następnie kliknij <strong>Create new action</strong>.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex gap-4">
+        <div
+          class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold bg-secondary"
+        >
+          6
+        </div>
+        <div class="flex-1">
+          <h3 class="font-semibold text-primary">Kliknij „Import from URL"</h3>
+          <p class="text-sm text-gray-500">
+            Przycisk znajduje się w górnej części edytora akcji.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex gap-4">
+        <div
+          class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold bg-secondary"
+        >
+          7
+        </div>
+        <div class="flex-1">
+          <h3 class="font-semibold text-primary">Wklej adres i kliknij „Import"</h3>
+          <p class="text-sm text-gray-500 mb-3">
+            Wklej poniższy adres schematu API i zatwierdź:
+          </p>
+          <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm text-green-400 flex items-center justify-between">
+            <code>{{ base_url }}/openapi.json</code>
+            <button
+              onclick="
+                navigator.clipboard.writeText('{{ base_url }}/openapi.json');
+                this.textContent = 'Skopiowano!';
+                setTimeout(() => (this.textContent = 'Kopiuj'), 2000);
+              "
+              class="text-gray-500 hover:text-white text-xs px-2 py-1 rounded border border-gray-700 hover:border-gray-500 transition-colors flex-shrink-0"
+            >
+              Kopiuj
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex gap-4">
+        <div
+          class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold bg-secondary"
+        >
+          8
+        </div>
+        <div class="flex-1">
+          <h3 class="font-semibold text-primary">Kliknij „Create"</h3>
+          <p class="text-sm text-gray-500 mb-4">
+            Zapisz GPT przyciskiem <strong>Create</strong> w prawym górnym rogu. Gotowe! Teraz możesz pytać o polskie prawo:
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="bg-gray-50 rounded-lg p-3 border border-gray-100">
+              <p class="text-sm text-gray-700 italic">
+                „Wyszukaj przepisy dotyczące umowy najmu"
+              </p>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-3 border border-gray-100">
+              <p class="text-sm text-gray-700 italic">
+                „Jakie ustawy głosowano w Sejmie w tym miesiącu?"
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Advanced setup -->
+  <div id="step-advanced" class="hidden">
+    <button
+      onclick="showStep('choice')"
+      class="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-secondary mb-6"
+    >
+      <span class="material-symbols-outlined text-sm">arrow_back</span>
+      Wróć
+    </button>
+    <h2 class="font-headline font-bold text-xl text-primary mb-6">
+      Konfiguracja zaawansowana
+    </h2>
+
+    <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+      <h3 class="font-semibold text-primary mb-4">Serwer MCP</h3>
+      <dl class="space-y-4 text-sm">
+        <div>
+          <dt class="text-gray-500 text-xs uppercase tracking-wide mb-1">
+            Adres MCP (Streamable HTTP)
+          </dt>
+          <dd
+            class="bg-gray-900 rounded-lg p-4 font-mono text-green-400 flex items-center justify-between"
+          >
+            <code>{{ base_url }}/mcp</code>
+            <button
+              onclick="
+                navigator.clipboard.writeText('{{ base_url }}/mcp');
+                this.textContent = 'Skopiowano!';
+                setTimeout(() => (this.textContent = 'Kopiuj'), 2000);
+              "
+              class="text-gray-500 hover:text-white text-xs px-2 py-1 rounded border border-gray-700 hover:border-gray-500 transition-colors"
+            >
+              Kopiuj
+            </button>
+          </dd>
+        </div>
+        <div>
+          <dt class="text-gray-500 text-xs uppercase tracking-wide mb-1">
+            Transport
+          </dt>
+          <dd class="text-gray-900 font-medium">HTTP (Streamable HTTP MCP)</dd>
+        </div>
+        <div>
+          <dt class="text-gray-500 text-xs uppercase tracking-wide mb-1">
+            REST API (OpenAPI)
+          </dt>
+          <dd
+            class="bg-gray-900 rounded-lg p-4 font-mono text-green-400 flex items-center justify-between"
+          >
+            <code>{{ base_url }}/openapi.json</code>
+            <button
+              onclick="
+                navigator.clipboard.writeText(
+                  '{{ base_url }}/openapi.json',
+                );
+                this.textContent = 'Skopiowano!';
+                setTimeout(() => (this.textContent = 'Kopiuj'), 2000);
+              "
+              class="text-gray-500 hover:text-white text-xs px-2 py-1 rounded border border-gray-700 hover:border-gray-500 transition-colors"
+            >
+              Kopiuj
+            </button>
+          </dd>
+        </div>
+        <div>
+          <dt class="text-gray-500 text-xs uppercase tracking-wide mb-1">
+            Autentykacja
+          </dt>
+          <dd class="text-gray-900 font-medium">Brak (bez tokenu)</dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+      <h3 class="font-semibold text-primary mb-4">
+        Przykład konfiguracji JSON
+      </h3>
+      <div
+        class="bg-gray-900 rounded-lg p-4 font-mono text-sm text-green-400 overflow-x-auto"
+      >
+        <pre>
+{
+  "mcpServers": {
+    "lupa-na-prawo": {
+      "url": "{{ base_url }}/mcp"
+    }
+  }
+}</pre
+        >
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm p-6">
+      <h3 class="font-semibold text-primary mb-4">Dostępne narzędzia MCP</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+        <div class="bg-gray-50 rounded-lg p-3 border border-gray-100">
+          <code class="text-secondary font-mono text-xs">search_law</code>
+          <p class="text-gray-500 text-xs mt-1">
+            Wyszukiwanie semantyczne w aktach prawnych
+          </p>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-3 border border-gray-100">
+          <code class="text-secondary font-mono text-xs">get_article</code>
+          <p class="text-gray-500 text-xs mt-1">
+            Pobieranie konkretnego artykułu
+          </p>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-3 border border-gray-100">
+          <code class="text-secondary font-mono text-xs"
+            >search_sejm_processes</code
+          >
+          <p class="text-gray-500 text-xs mt-1">
+            Wyszukiwanie procesów legislacyjnych
+          </p>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-3 border border-gray-100">
+          <code class="text-secondary font-mono text-xs">search_votings</code>
+          <p class="text-gray-500 text-xs mt-1">
+            Wyszukiwanie głosowań w Sejmie
+          </p>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-3 border border-gray-100">
+          <code class="text-secondary font-mono text-xs">search_prints</code>
+          <p class="text-gray-500 text-xs mt-1">
+            Wyszukiwanie w drukach sejmowych
+          </p>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-3 border border-gray-100">
+          <code class="text-secondary font-mono text-xs"
+            >get_recent_activity</code
+          >
+          <p class="text-gray-500 text-xs mt-1">
+            Ostatnia aktywność legislacyjna
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ (always visible at bottom) -->
+  <div class="mt-12 pt-8 border-t border-gray-200">
+    <h2
+      class="font-headline font-bold text-xl text-primary mb-6 flex items-center gap-2"
+    >
+      <span class="material-symbols-outlined text-secondary">help</span>
+      Najczęściej zadawane pytania
+    </h2>
+    <div class="space-y-3">
+      <details class="bg-white rounded-lg shadow-sm group">
+        <summary
+          class="px-5 py-4 cursor-pointer font-medium text-sm text-gray-800 flex items-center justify-between list-none"
+        >
+          <span>Czym jest MCP?</span>
+          <span
+            class="material-symbols-outlined text-gray-400 group-open:rotate-180 transition-transform"
+            >expand_more</span
+          >
+        </summary>
+        <div class="px-5 pb-4 text-sm text-gray-600">
+          MCP (Model Context Protocol) to otwarty standard umożliwiający
+          podłączanie źródeł danych i narzędzi bezpośrednio do asystentów AI.
+          Dzięki niemu Twój agent może wyszukiwać w bazie prawa, sprawdzać
+          głosowania i procesy legislacyjne bez opuszczania czatu.
+        </div>
+      </details>
+      <details class="bg-white rounded-lg shadow-sm group">
+        <summary
+          class="px-5 py-4 cursor-pointer font-medium text-sm text-gray-800 flex items-center justify-between list-none"
+        >
+          <span>Czy to jest darmowe?</span>
+          <span
+            class="material-symbols-outlined text-gray-400 group-open:rotate-180 transition-transform"
+            >expand_more</span
+          >
+        </summary>
+        <div class="px-5 pb-4 text-sm text-gray-600">
+          Tak, Lupa na prawo jest całkowicie darmowy i open-source.
+        </div>
+      </details>
+      <details class="bg-white rounded-lg shadow-sm group">
+        <summary
+          class="px-5 py-4 cursor-pointer font-medium text-sm text-gray-800 flex items-center justify-between list-none"
+        >
+          <span>Czy w ogóle jest mi to potrzebne? Czy nie mogę zapytać czata normalnie?</span>
+          <span
+            class="material-symbols-outlined text-gray-400 group-open:rotate-180 transition-transform"
+            >expand_more</span
+          >
+        </summary>
+        <div class="px-5 pb-4 text-sm text-gray-600">
+          Oczywiście że możesz. Aczkolwiek czaty radzą sobie dużo lepiej, jeśli mogą przeszukać bazę wiedzy w inteligentny sposób. To MCP bardzo w tym pomaga.
+        </div>
+      </details>
+      <details class="bg-white rounded-lg shadow-sm group">
+        <summary
+          class="px-5 py-4 cursor-pointer font-medium text-sm text-gray-800 flex items-center justify-between list-none"
+        >
+          <span>Czy mogę zaufać czatowi z odpowiedzią?</span>
+          <span
+            class="material-symbols-outlined text-gray-400 group-open:rotate-180 transition-transform"
+            >expand_more</span
+          >
+        </summary>
+        <div class="px-5 pb-4 text-sm text-gray-600">
+          Nigdy nie powinieneś ufać całkowicie, szczególnie jeśli chodzi o pomoc prawną. Czat może Ci pomóc zeksplorować pewien temat, dowiedzieć się czegoś więcej — ale w poważnych sprawach zawsze powinieneś skonsultować się z prawnikiem.
+        </div>
+      </details>
+    </div>
+  </div>
+</div>
+
+<script>
+  function showStep(step) {
+    // Hide all steps
+    document.getElementById("step-choice").classList.add("hidden");
+    document.getElementById("step-guided-client").classList.add("hidden");
+    document.getElementById("step-guided-claude").classList.add("hidden");
+    document.getElementById("step-guided-chatgpt").classList.add("hidden");
+    document.getElementById("step-advanced").classList.add("hidden");
+
+    // Show requested step
+    const mapping = {
+      choice: "step-choice",
+      "guided-client": "step-guided-client",
+      "guided-claude": "step-guided-claude",
+      "guided-chatgpt": "step-guided-chatgpt",
+      advanced: "step-advanced",
+    };
+    document.getElementById(mapping[step]).classList.remove("hidden");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+</script>
+{% endblock %}

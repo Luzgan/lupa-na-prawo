@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Lupa na prawo{% endblock %}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#031636',
+            secondary: '#ba002e',
+            tertiary: '#241300',
+          },
+          fontFamily: {
+            headline: ['Manrope', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4, h5, h6 { font-family: 'Manrope', sans-serif; }
+    .material-symbols-outlined { vertical-align: middle; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900 min-h-screen flex flex-col">
+
+  <!-- Navigation -->
+  <nav class="bg-primary text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="/" class="flex items-center gap-2 text-white no-underline">
+          <span class="material-symbols-outlined text-secondary">gavel</span>
+          <span class="font-headline font-bold text-lg">Lupa na prawo</span>
+        </a>
+        <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+          <a href="/szukaj" class="text-gray-300 hover:text-white transition-colors">Szukaj w prawie</a>
+          <a href="/sejm" class="text-gray-300 hover:text-white transition-colors">Sejm</a>
+          <a href="/mcp-poradnik" class="text-gray-300 hover:text-white transition-colors">MCP</a>
+        </div>
+        <!-- Mobile menu button -->
+        <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="md:hidden text-gray-300 hover:text-white">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-white/10 pb-3">
+      <div class="px-4 pt-2 space-y-1">
+        <a href="/szukaj" class="block py-3 text-gray-300 hover:text-white text-base">Szukaj w prawie</a>
+        <a href="/sejm" class="block py-3 text-gray-300 hover:text-white text-base">Sejm</a>
+        <a href="/mcp-poradnik" class="block py-3 text-gray-300 hover:text-white text-base">MCP</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <main class="flex-1 pb-16 md:pb-0">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Bottom Navigation (mobile only) -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-[0_-2px_10px_rgba(0,0,0,0.08)] z-50 md:hidden"
+       style="min-height: 56px;">
+    <div class="flex items-stretch justify-around h-full">
+      <a href="/"
+         class="flex flex-col items-center justify-center flex-1 py-2 {{ 'text-secondary' if request.path == '/' else 'text-gray-500' }}">
+        <span class="material-symbols-outlined" style="font-size: 24px;">home</span>
+        <span class="text-[10px] mt-0.5 font-medium leading-tight">Strona główna</span>
+      </a>
+      <a href="/szukaj"
+         class="flex flex-col items-center justify-center flex-1 py-2 {{ 'text-secondary' if request.path == '/szukaj' else 'text-gray-500' }}">
+        <span class="material-symbols-outlined" style="font-size: 24px;">search</span>
+        <span class="text-[10px] mt-0.5 font-medium leading-tight">Szukaj</span>
+      </a>
+      <a href="/sejm"
+         class="flex flex-col items-center justify-center flex-1 py-2 {{ 'text-secondary' if request.path == '/sejm' else 'text-gray-500' }}">
+        <span class="material-symbols-outlined" style="font-size: 24px;">gavel</span>
+        <span class="text-[10px] mt-0.5 font-medium leading-tight">Sejm</span>
+      </a>
+      <a href="/mcp-poradnik"
+         class="flex flex-col items-center justify-center flex-1 py-2 {{ 'text-secondary' if request.path == '/mcp-poradnik' else 'text-gray-500' }}">
+        <span class="material-symbols-outlined" style="font-size: 24px;">integration_instructions</span>
+        <span class="text-[10px] mt-0.5 font-medium leading-tight">MCP</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Footer -->
+  <footer class="bg-primary text-gray-400 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary text-sm">gavel</span>
+          <span class="font-headline font-bold text-white text-sm">Lupa na prawo</span>
+        </div>
+        <div class="flex gap-6 text-xs">
+          <a href="/regulamin" class="hover:text-white transition-colors">Regulamin</a>
+          <a href="/prywatnosc" class="hover:text-white transition-colors">Polityka Prywatności</a>
+          <a href="https://lukholc.me#contact" target="_blank" class="hover:text-white transition-colors">Kontakt</a>
+        </div>
+        <p class="text-xs">&copy; 2026 Lupa na prawo. Wszelkie prawa zastrzeżone.</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

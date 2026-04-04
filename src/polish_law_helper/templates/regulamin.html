@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% block title %}Regulamin - Lupa na prawo{% endblock %}
+{% block content %}
+<section class="bg-primary py-10">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <span class="material-symbols-outlined text-5xl text-secondary mb-4">description</span>
+    <h1 class="font-headline font-bold text-3xl md:text-4xl text-white mb-3">Regulamin</h1>
+    <p class="text-gray-300 text-lg">Zasady korzystania z serwisu Lupa na prawo</p>
+  </div>
+</section>
+
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 space-y-8">
+
+    <!-- Important disclaimer -->
+    <div class="bg-red-50 border-l-4 border-secondary rounded-r-lg p-6">
+      <div class="flex items-start gap-3">
+        <span class="material-symbols-outlined text-secondary mt-0.5">warning</span>
+        <div>
+          <h2 class="font-headline font-bold text-lg text-secondary mb-2">
+            Lupa na prawo NIE jest pomocą prawną
+          </h2>
+          <p class="text-gray-700 text-sm leading-relaxed">
+            Serwis Lupa na prawo jest narzędziem informacyjnym umożliwiającym przeszukiwanie
+            tekstów aktów prawnych oraz śledzenie prac legislacyjnych Sejmu i Senatu.
+            <strong>Nie stanowi pomocy prawnej w rozumieniu ustawy z dnia 26 maja 1982 r.
+            Prawo o adwokaturze ani ustawy z dnia 6 lipca 1982 r. o radcach prawnych.</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 1 -->
+    <div>
+      <h2 class="font-headline font-bold text-xl text-primary mb-3">
+        &sect; 1. Charakter serwisu
+      </h2>
+      <ol class="list-decimal list-inside space-y-2 text-gray-700 text-sm leading-relaxed">
+        <li>
+          Lupa na prawo jest darmowym narzędziem do semantycznego przeszukiwania polskich
+          aktów prawnych oraz monitorowania procesu legislacyjnego.
+        </li>
+        <li>
+          Serwis udostępnia treści aktów prawnych publikowanych w oficjalnych źródłach
+          (Dziennik Ustaw, API Sejmu i Senatu) w formie ułatwiającej wyszukiwanie.
+        </li>
+        <li>
+          Serwis <strong>nie interpretuje</strong> przepisów prawa, <strong>nie udziela
+          porad prawnych</strong> i <strong>nie zastępuje</strong> konsultacji z adwokatem,
+          radcą prawnym ani innym wykwalifikowanym prawnikiem.
+        </li>
+      </ol>
+    </div>
+
+    <!-- Section 2 -->
+    <div>
+      <h2 class="font-headline font-bold text-xl text-primary mb-3">
+        &sect; 2. Ograniczenie odpowiedzialności
+      </h2>
+      <ol class="list-decimal list-inside space-y-2 text-gray-700 text-sm leading-relaxed">
+        <li>
+          Twórcy serwisu <strong>nie ponoszą odpowiedzialności</strong> za jakiekolwiek
+          decyzje podjęte na podstawie informacji uzyskanych za pośrednictwem serwisu.
+        </li>
+        <li>
+          Treści prezentowane w serwisie mogą zawierać błędy, być nieaktualne lub niekompletne.
+          Jedynym wiążącym źródłem prawa jest jego oficjalna publikacja.
+        </li>
+        <li>
+          Wyniki wyszukiwania semantycznego mają charakter przybliżony i mogą nie odzwierciedlać
+          pełnego kontekstu prawnego danego zagadnienia.
+        </li>
+        <li>
+          W sprawach prawnych zawsze należy skonsultować się z wykwalifikowanym prawnikiem.
+        </li>
+      </ol>
+    </div>
+
+    <!-- Section 3 -->
+    <div>
+      <h2 class="font-headline font-bold text-xl text-primary mb-3">
+        &sect; 3. Korzystanie z serwisu
+      </h2>
+      <ol class="list-decimal list-inside space-y-2 text-gray-700 text-sm leading-relaxed">
+        <li>
+          Korzystanie z serwisu jest bezpłatne i nie wymaga rejestracji.
+        </li>
+        <li>
+          Użytkownik zobowiązuje się do korzystania z serwisu zgodnie z jego przeznaczeniem
+          i obowiązującym prawem.
+        </li>
+        <li>
+          Zabronione jest nadmierne obciążanie infrastruktury serwisu (np. automatyczne
+          masowe pobieranie danych).
+        </li>
+      </ol>
+    </div>
+
+    <!-- Section 4 -->
+    <div>
+      <h2 class="font-headline font-bold text-xl text-primary mb-3">
+        &sect; 4. Interfejs MCP
+      </h2>
+      <ol class="list-decimal list-inside space-y-2 text-gray-700 text-sm leading-relaxed">
+        <li>
+          Serwis udostępnia interfejs MCP (Model Context Protocol) umożliwiający
+          agentom AI dostęp do bazy przepisów.
+        </li>
+        <li>
+          Odpowiedzi generowane przez agentów AI na podstawie danych z serwisu
+          <strong>nie stanowią porady prawnej</strong> i podlegają tym samym
+          ograniczeniom co bezpośrednie korzystanie z serwisu.
+        </li>
+      </ol>
+    </div>
+
+    <!-- Section 5 -->
+    <div>
+      <h2 class="font-headline font-bold text-xl text-primary mb-3">
+        &sect; 5. Postanowienia końcowe
+      </h2>
+      <ol class="list-decimal list-inside space-y-2 text-gray-700 text-sm leading-relaxed">
+        <li>
+          Regulamin może być zmieniony w dowolnym czasie. Aktualna wersja jest zawsze
+          dostępna pod adresem <code class="text-secondary">/regulamin</code>.
+        </li>
+        <li>
+          W sprawach nieuregulowanych niniejszym regulaminem zastosowanie mają
+          przepisy prawa polskiego.
+        </li>
+      </ol>
+    </div>
+
+    <p class="text-xs text-gray-400 pt-4 border-t border-gray-100">
+      Ostatnia aktualizacja: 4 kwietnia 2026
+    </p>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block title %}Lupa na prawo - Polskie prawo w zasięgu ręki{% endblock %}
+
+{% block content %}
+<!-- Hero Section — MCP Promotion -->
+<section class="relative overflow-hidden bg-primary">
+  <div class="absolute inset-0 opacity-[0.07]" style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22><path d=%22M30 0L60 30L30 60L0 30Z%22 fill=%22none%22 stroke=%22white%22 stroke-width=%220.5%22/></svg>');"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+      <!-- Left — headline + CTA -->
+      <div>
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary/20 text-red-300 text-xs font-semibold mb-6 border border-secondary/30">
+          <span class="material-symbols-outlined text-sm">smart_toy</span>
+          Połącz swoje AI z polskim prawem
+        </div>
+        <h1 class="font-headline font-extrabold text-4xl md:text-5xl text-white mb-6 leading-tight">
+          Zapytaj swojego<br>agenta AI o prawo
+        </h1>
+        <p class="text-gray-200 text-lg mb-8 max-w-lg">
+          Podłącz Pomocnika Prawnego do Claude, Cursor, ChatGPT lub innego klienta.
+          Twój asystent AI przeszuka aktualne ustawy, kodeksy i głosowania w Sejmie.
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <a href="/mcp-poradnik"
+             class="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-white font-semibold text-sm shadow-lg hover:shadow-xl transition-shadow"
+             style="background: linear-gradient(135deg, #ba002e 0%, #e31c40 100%);">
+            <span class="material-symbols-outlined text-sm">integration_instructions</span>
+            Połącz ze swoim AI agentem
+          </a>
+          <a href="/szukaj"
+             class="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-white/80 hover:text-white font-medium text-sm border border-white/20 hover:border-white/40 transition-colors">
+            <span class="material-symbols-outlined text-sm">search</span>
+            Lub szukaj ręcznie
+          </a>
+        </div>
+      </div>
+
+      <!-- Right — example questions -->
+      <div class="space-y-4">
+        <p class="text-gray-300 text-xs font-semibold uppercase tracking-wider mb-2">Przykładowe pytania do agenta AI</p>
+        <div class="space-y-3">
+          <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 hover:bg-white/15 transition-colors">
+            <div class="flex items-start gap-3">
+              <span class="material-symbols-outlined text-secondary mt-0.5">chat_bubble</span>
+              <p class="text-white text-sm leading-relaxed">„Jak nadchodzące ustawy mogą wpłynąć na moje życie?"</p>
+            </div>
+          </div>
+          <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 hover:bg-white/15 transition-colors">
+            <div class="flex items-start gap-3">
+              <span class="material-symbols-outlined text-secondary mt-0.5">chat_bubble</span>
+              <p class="text-white text-sm leading-relaxed">„Co możesz mi powiedzieć o prawie dziedziczenia?"</p>
+            </div>
+          </div>
+          <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 hover:bg-white/15 transition-colors">
+            <div class="flex items-start gap-3">
+              <span class="material-symbols-outlined text-secondary mt-0.5">chat_bubble</span>
+              <p class="text-white text-sm leading-relaxed">„Jakie prawa przysługują mi jako najemcy mieszkania?"</p>
+            </div>
+          </div>
+          <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 hover:bg-white/15 transition-colors">
+            <div class="flex items-start gap-3">
+              <span class="material-symbols-outlined text-secondary mt-0.5">chat_bubble</span>
+              <p class="text-white text-sm leading-relaxed">„Pokaż najnowsze głosowania w sprawie zmian w kodeksie pracy"</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Search Section -->
+<section class="bg-white border-b border-gray-100 py-10">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="font-headline font-bold text-xl text-primary mb-2">Szukaj w prawie</h2>
+    <p class="text-gray-500 text-sm mb-6">Przeszukuj aktualne ustawy i rozporządzenia w języku naturalnym</p>
+    <form action="/szukaj" method="GET" class="max-w-2xl mx-auto" onsubmit="this.querySelector('.search-btn').disabled=true;this.querySelector('.search-btn').innerHTML='<span class=\'inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin\'></span> Szukam...'">
+      <div class="flex rounded-xl overflow-hidden shadow-md border border-gray-200">
+        <div class="relative flex-1">
+          <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+          <input type="text" name="q" placeholder="Np. «prawo do obrony w procesie karnym»"
+                 class="w-full pl-12 pr-4 py-4 text-base focus:outline-none border-0">
+        </div>
+        <button type="submit"
+                class="search-btn px-6 md:px-8 text-white font-semibold text-sm whitespace-nowrap disabled:opacity-70"
+                style="background: linear-gradient(135deg, #ba002e 0%, #e31c40 100%);">
+          Szukaj
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- Stats Section -->
+<section class="bg-gray-50 border-b border-gray-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div id="stats"
+         hx-get="/partials/stats"
+         hx-trigger="every 60s"
+         hx-swap="innerHTML">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-white rounded-lg shadow-sm p-4 text-center">
+          <div class="text-3xl font-bold text-primary font-headline">{{ acts_count }}</div>
+          <div class="text-xs text-gray-500 mt-1">Aktów prawnych</div>
+        </div>
+        <div class="bg-white rounded-lg shadow-sm p-4 text-center">
+          <div class="text-3xl font-bold text-green-600 font-headline">{{ "{:,}".format(chunks_count) }}</div>
+          <div class="text-xs text-gray-500 mt-1">Przepisów</div>
+        </div>
+        <div class="bg-white rounded-lg shadow-sm p-4 text-center">
+          <div class="text-3xl font-bold text-amber-600 font-headline">{{ "{:,}".format(processes_count) }}</div>
+          <div class="text-xs text-gray-500 mt-1">Procesów w Sejmie</div>
+        </div>
+        <div class="bg-white rounded-lg shadow-sm p-4 text-center">
+          <div class="text-3xl font-bold text-indigo-600 font-headline">{{ "{:,}".format(votings_count) }}</div>
+          <div class="text-xs text-gray-500 mt-1">Głosowań</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Recent Acts -->
+<section class="py-12 md:py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center gap-3 mb-8">
+      <span class="material-symbols-outlined text-secondary">menu_book</span>
+      <h2 class="font-headline font-bold text-2xl text-primary">Aktualne ustawy</h2>
+    </div>
+    <div id="recent-acts">
+      {% include "partials/recent_acts.html" %}
+    </div>
+    <div class="mt-6 text-center">
+      <a href="/ustawy" class="inline-flex items-center gap-2 text-sm font-medium text-secondary hover:underline">
+        Zobacz wszystkie ustawy
+        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Sejm Live -->
+<section class="py-12 md:py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center gap-3 mb-8">
+      <span class="material-symbols-outlined text-secondary">account_balance</span>
+      <h2 class="font-headline font-bold text-2xl text-primary">Na żywo z Sejmu</h2>
+    </div>
+    <div id="sejm-live">
+      {% include "partials/sejm_live.html" %}
+    </div>
+  </div>
+</section>
+{% endblock %}

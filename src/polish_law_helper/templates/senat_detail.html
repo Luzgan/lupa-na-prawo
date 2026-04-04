@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}Senat — Druk {{ senat.print_number }} - Lupa na prawo{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+  <!-- Breadcrumb -->
+  <nav class="text-sm text-gray-500 mb-6">
+    <a href="/" class="hover:text-secondary">Strona główna</a>
+    <span class="mx-1">/</span>
+    <a href="/sejm" class="hover:text-secondary">Senat</a>
+    <span class="mx-1">/</span>
+    <span class="text-gray-700">{{ senat.print_number }}</span>
+  </nav>
+
+  <!-- Title & Meta -->
+  <div class="mb-8">
+    <div class="flex flex-wrap items-center gap-2 mb-3">
+      <span class="inline-block px-2.5 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">Druk {{ senat.print_number }}</span>
+      {% if senat.decision %}
+      <span class="inline-block px-3 py-1.5 rounded-lg text-sm font-bold
+        {% if 'przyj' in (senat.decision | lower) %}bg-green-100 text-green-800 border border-green-200
+        {% elif 'odrzuc' in (senat.decision | lower) %}bg-red-100 text-red-800 border border-red-200
+        {% elif 'poprawk' in (senat.decision | lower) %}bg-amber-100 text-amber-800 border border-amber-200
+        {% else %}bg-gray-100 text-gray-600 border border-gray-200{% endif %}">
+        {{ senat.decision }}
+      </span>
+      {% endif %}
+    </div>
+    <h1 class="font-headline font-bold text-2xl md:text-3xl text-primary leading-tight">{{ senat.title }}</h1>
+  </div>
+
+  <!-- Details -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+
+    <div class="bg-white rounded-lg shadow-sm p-5">
+      <h2 class="font-headline font-bold text-sm text-gray-500 uppercase tracking-wide mb-4">Informacje</h2>
+      <dl class="space-y-3 text-sm">
+        {% if senat.decision_date %}
+        <div>
+          <dt class="text-gray-500 text-xs">Data decyzji</dt>
+          <dd class="text-gray-900 font-medium">{{ senat.decision_date.strftime('%d.%m.%Y') }}</dd>
+        </div>
+        {% endif %}
+        {% if senat.decision %}
+        <div>
+          <dt class="text-gray-500 text-xs">Decyzja</dt>
+          <dd class="text-gray-900 font-medium">{{ senat.decision }}</dd>
+        </div>
+        {% endif %}
+        {% if senat.sejm_process_number %}
+        <div>
+          <dt class="text-gray-500 text-xs">Proces sejmowy</dt>
+          <dd>
+            <a href="/proces/{{ senat.sejm_process_number }}" class="text-secondary hover:underline font-medium">
+              Nr {{ senat.sejm_process_number }}
+            </a>
+          </dd>
+        </div>
+        {% endif %}
+      </dl>
+    </div>
+
+    <!-- Raw JSON details -->
+    {% if senat.raw_json %}
+    <div class="bg-white rounded-lg shadow-sm p-5">
+      <h2 class="font-headline font-bold text-sm text-gray-500 uppercase tracking-wide mb-4">Szczegóły</h2>
+      <dl class="space-y-3 text-sm">
+        {% for key, value in senat.raw_json.items() %}
+          {% if key not in ('title', 'printNumber', 'number') and value is not none and value != '' and value is not mapping and value is not iterable %}
+          <div>
+            <dt class="text-gray-500 text-xs">{{ key }}</dt>
+            <dd class="text-gray-900">{{ value }}</dd>
+          </div>
+          {% elif value is iterable and value is not string and value is not mapping %}
+          <div>
+            <dt class="text-gray-500 text-xs">{{ key }}</dt>
+            <dd class="text-gray-900">{{ value | join(', ') }}</dd>
+          </div>
+          {% endif %}
+        {% endfor %}
+      </dl>
+    </div>
+    {% endif %}
+
+  </div>
+
+</div>
+{% endblock %}
