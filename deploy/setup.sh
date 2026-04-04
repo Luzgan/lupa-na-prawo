@@ -8,13 +8,13 @@ set -euo pipefail
 echo "=== Setting up Lupa na prawo ==="
 cd /home/ec2-user
 
-if [ ! -d polish_law_helper ]; then
+if [ ! -d lupa-na-prawo ]; then
     echo "Clone the repo first:"
-    echo "  git clone <repo-url> polish_law_helper"
+    echo "  git clone <repo-url> lupa-na-prawo"
     exit 1
 fi
 
-cd polish_law_helper
+cd lupa-na-prawo
 
 # --- Ollama ---
 echo "=== Installing Ollama ==="
@@ -52,7 +52,7 @@ alembic upgrade head
 
 # --- Ownership ---
 echo "=== Fixing ownership ==="
-chown -R ec2-user:ec2-user /home/ec2-user/polish_law_helper
+chown -R ec2-user:ec2-user /home/ec2-user/lupa-na-prawo
 
 # --- systemd ---
 echo "=== Installing systemd service ==="
