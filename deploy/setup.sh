@@ -44,6 +44,12 @@ fi
 systemctl enable ollama
 systemctl start ollama
 
+echo "=== Waiting for Ollama to be ready ==="
+for i in $(seq 1 30); do
+    ollama list &> /dev/null && break
+    sleep 1
+done
+
 echo "=== Pulling embedding model ==="
 ollama pull jeffh/intfloat-multilingual-e5-large:f16
 
