@@ -68,14 +68,28 @@ echo "=== Creating venv and installing deps ==="
 uv venv .venv --python 3.12
 uv sync
 
-# --- Database ---
-echo "=== Creating database (if needed) ==="
-sudo -u postgres psql -tc "SELECT 1 FROM pg_database WHERE datname = 'polish_law'" | grep -q 1 || \
-    sudo -u postgres psql -c "CREATE DATABASE polish_law"
+# --- PostgreSQL ---
+echo "=== Installing PostgreSQL (if needed) ==="
+if ! command -v psql &> /dev/null; then
+    dnf install -y postgresql17 postgresql17-server postgresql17-server-devel
+    postgresql-setup --initdb
+    systemctl enable postgresql
+    systemctl start postgresql
+fi
+
+echo "=== Setting up database ==="
 sudo -u postgres psql -tc "SELECT 1 FROM pg_roles WHERE rolname = 'app'" | grep -q 1 || \
     sudo -u postgres psql -c "CREATE USER app WITH PASSWORD 'CHANGE_ME'"
+sudo -u postgres psql -tc "SELECT 1 FROM pg_database WHERE datname = 'polish_law'" | grep -q 1 || \
+    sudo -u postgres psql -c "CREATE DATABASE polish_law OWNER app"
 sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE polish_law TO app"
 sudo -u postgres psql -d polish_law -c "CREATE EXTENSION IF NOT EXISTS vector"
+
+# Allow local password auth (idempotent — only changes peer/ident if present)
+PG_HBA=$(sudo -u postgres psql -t -c "SHOW hba_file;" | xargs)
+sed -i '/^local.*all.*all/s/peer/md5/' "$PG_HBA"
+sed -i '/^host.*all.*all.*127/s/ident/md5/' "$PG_HBA"
+systemctl restart postgresql
 
 echo "=== Running migrations ==="
 source .venv/bin/activate
