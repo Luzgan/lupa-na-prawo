@@ -21,6 +21,26 @@ echo "=== Installing Ollama ==="
 if ! command -v ollama &> /dev/null; then
     curl -fsSL https://ollama.com/install.sh | sh
 fi
+
+if [ ! -f /etc/systemd/system/ollama.service ]; then
+    echo "=== Creating Ollama systemd service ==="
+    cat > /etc/systemd/system/ollama.service << 'UNIT'
+[Unit]
+Description=Ollama
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/ollama serve
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+UNIT
+    systemctl daemon-reload
+fi
+
 systemctl enable ollama
 systemctl start ollama
 
