@@ -56,6 +56,7 @@ ollama pull jeffh/intfloat-multilingual-e5-large:f16
 
 # --- Python ---
 echo "=== Installing uv (if needed) ==="
+export PATH="/home/ec2-user/.local/bin:$PATH"
 if ! command -v uv &> /dev/null; then
     curl -LsSf https://astral.sh/uv/install.sh | sh
 fi
