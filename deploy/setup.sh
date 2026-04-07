@@ -31,6 +31,7 @@ After=network.target
 
 [Service]
 Type=simple
+Environment=HOME=/home/ec2-user
 ExecStart=/usr/local/bin/ollama serve
 Restart=always
 RestartSec=5
