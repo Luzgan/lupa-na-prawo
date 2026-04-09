@@ -7,7 +7,7 @@ Type=simple
 User=ec2-user
 WorkingDirectory=/home/ec2-user/lupa-na-prawo
 EnvironmentFile=/home/ec2-user/lupa-na-prawo/.env
-ExecStart=/home/ec2-user/lupa-na-prawo/.venv/bin/python -m uvicorn lupa-na-prawo.server:app --host 127.0.0.1 --port 8766
+ExecStart=/home/ec2-user/lupa-na-prawo/.venv/bin/python -m uvicorn polish_law_helper.server:app --host 127.0.0.1 --port 8766
 Restart=always
 RestartSec=5
 Environment=PYTHONUNBUFFERED=1
