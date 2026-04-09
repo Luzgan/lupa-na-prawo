@@ -78,11 +78,11 @@ if ! command -v psql &> /dev/null; then
 fi
 
 echo "=== Setting up database ==="
-sudo -u postgres psql -tc "SELECT 1 FROM pg_roles WHERE rolname = 'app'" | grep -q 1 || \
-    sudo -u postgres psql -c "CREATE USER app WITH PASSWORD 'CHANGE_ME'"
+sudo -u postgres psql -tc "SELECT 1 FROM pg_roles WHERE rolname = 'lupa_na_prawo'" | grep -q 1 || \
+    sudo -u postgres psql -c "CREATE USER lupa_na_prawo WITH PASSWORD 'CHANGE_ME'"
 sudo -u postgres psql -tc "SELECT 1 FROM pg_database WHERE datname = 'polish_law'" | grep -q 1 || \
-    sudo -u postgres psql -c "CREATE DATABASE polish_law OWNER app"
-sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE polish_law TO app"
+    sudo -u postgres psql -c "CREATE DATABASE polish_law OWNER lupa_na_prawo"
+sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE polish_law TO lupa_na_prawo"
 sudo -u postgres psql -d polish_law -c "CREATE EXTENSION IF NOT EXISTS vector"
 
 # Allow local password auth (idempotent — only changes peer/ident if present)
@@ -114,8 +114,8 @@ systemctl restart nginx
 echo ""
 echo "=== Done! Next steps ==="
 echo "1. Create .env file:"
-echo "   PLH_DATABASE_URL=postgresql+asyncpg://app:CHANGE_ME@localhost:5432/polish_law"
-echo "   PLH_DATABASE_URL_SYNC=postgresql+psycopg://app:CHANGE_ME@localhost:5432/polish_law"
+echo "   PLH_DATABASE_URL=postgresql+asyncpg://lupa_na_prawo:CHANGE_ME@localhost:5432/polish_law"
+echo "   PLH_DATABASE_URL_SYNC=postgresql+psycopg://lupa_na_prawo:CHANGE_ME@localhost:5432/polish_law"
 echo "   PLH_OLLAMA_URL=http://localhost:11434"
 echo "   PLH_BASE_URL=https://lupa-na-prawo.lukholc.me"
 echo "2. Generate SSL cert:"

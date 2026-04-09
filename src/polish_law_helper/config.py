@@ -2,8 +2,8 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    database_url: str = "postgresql+asyncpg://app:dev@localhost:5432/polish_law"
-    database_url_sync: str = "postgresql+psycopg://app:dev@localhost:5432/polish_law"
+    database_url: str = "postgresql+asyncpg://lupa_na_prawo:dev@localhost:5432/polish_law"
+    database_url_sync: str = "postgresql+psycopg://lupa_na_prawo:dev@localhost:5432/polish_law"
     ollama_url: str = "http://localhost:11434"
     ollama_model: str = "jeffh/intfloat-multilingual-e5-large:f16"
     embedding_dim: int = 1024
