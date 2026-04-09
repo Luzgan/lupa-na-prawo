@@ -65,7 +65,7 @@ if ! command -v uv &> /dev/null; then
 fi
 
 echo "=== Creating venv and installing deps ==="
-uv venv .venv --python 3.12
+uv venv .venv --python 3.11
 uv sync
 
 # --- PostgreSQL ---

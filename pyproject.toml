@@ -3,7 +3,7 @@ name = "polish-law-helper"
 version = "0.1.0"
 description = "Semantic search over Polish law codexes + Sejm/Senat legislative tracking"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.11"
 dependencies = [
     "fastapi>=0.115",
     "uvicorn[standard]",
