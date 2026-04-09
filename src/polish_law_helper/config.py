@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     cron_enabled: bool = True
     base_url: str = "http://localhost:8765"
 
-    model_config = {"env_prefix": "PLH_"}
+    model_config = {"env_prefix": "PLH_", "env_file": ".env"}
 
 
 settings = Settings()
