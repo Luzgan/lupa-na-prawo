@@ -28,6 +28,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             set -e
+            export PATH="$HOME/.local/bin:$PATH"
             cd ~/lupa-na-prawo
             uv sync
             source .venv/bin/activate
